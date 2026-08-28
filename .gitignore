@@ -9,5 +9,9 @@ dist-ssr
 .wrangler
 .output
 .vinxi
+.freebuff
 __unconfig*
 todos.json
+
+# Local Netlify folder
+.netlify

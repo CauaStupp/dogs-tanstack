@@ -10,33 +10,142 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteRouteImport } from './routes/_auth/route'
+import { Route as AccountRouteRouteImport } from './routes/account/route'
+import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
+import { Route as AccountIndexRouteImport } from './routes/account/index'
+import { Route as AccountPostRouteImport } from './routes/account/post'
+import { Route as AccountStatisticsRouteImport } from './routes/account/statistics'
+import { Route as PhotoIdRouteImport } from './routes/photo/$id'
+import { Route as ProfileUsernameRouteImport } from './routes/profile/$username'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountRouteRoute = AccountRouteRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AccountIndexRoute = AccountIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AccountRouteRoute,
+} as any)
+const AccountPostRoute = AccountPostRouteImport.update({
+  id: '/post',
+  path: '/post',
+  getParentRoute: () => AccountRouteRoute,
+} as any)
+const AccountStatisticsRoute = AccountStatisticsRouteImport.update({
+  id: '/statistics',
+  path: '/statistics',
+  getParentRoute: () => AccountRouteRoute,
+} as any)
+const PhotoIdRoute = PhotoIdRouteImport.update({
+  id: '/photo/$id',
+  path: '/photo/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileUsernameRoute = ProfileUsernameRouteImport.update({
+  id: '/profile/$username',
+  path: '/profile/$username',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/account': typeof AccountRouteRouteWithChildren
+  '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
+  '/account/post': typeof AccountPostRoute
+  '/account/statistics': typeof AccountStatisticsRoute
+  '/photo/$id': typeof PhotoIdRoute
+  '/profile/$username': typeof ProfileUsernameRoute
+  '/account/': typeof AccountIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
+  '/account/post': typeof AccountPostRoute
+  '/account/statistics': typeof AccountStatisticsRoute
+  '/photo/$id': typeof PhotoIdRoute
+  '/profile/$username': typeof ProfileUsernameRoute
+  '/account': typeof AccountIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteRouteWithChildren
+  '/account': typeof AccountRouteRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/signup': typeof AuthSignupRoute
+  '/account/post': typeof AccountPostRoute
+  '/account/statistics': typeof AccountStatisticsRoute
+  '/photo/$id': typeof PhotoIdRoute
+  '/profile/$username': typeof ProfileUsernameRoute
+  '/account/': typeof AccountIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/account'
+    | '/login'
+    | '/signup'
+    | '/account/post'
+    | '/account/statistics'
+    | '/photo/$id'
+    | '/profile/$username'
+    | '/account/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/account/post'
+    | '/account/statistics'
+    | '/photo/$id'
+    | '/profile/$username'
+    | '/account'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/account'
+    | '/_auth/login'
+    | '/_auth/signup'
+    | '/account/post'
+    | '/account/statistics'
+    | '/photo/$id'
+    | '/profile/$username'
+    | '/account/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  AccountRouteRoute: typeof AccountRouteRouteWithChildren
+  PhotoIdRoute: typeof PhotoIdRoute
+  ProfileUsernameRoute: typeof ProfileUsernameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,12 +157,118 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/signup': {
+      id: '/_auth/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/account/': {
+      id: '/account/'
+      path: '/'
+      fullPath: '/account/'
+      preLoaderRoute: typeof AccountIndexRouteImport
+      parentRoute: typeof AccountRouteRoute
+    }
+    '/account/post': {
+      id: '/account/post'
+      path: '/post'
+      fullPath: '/account/post'
+      preLoaderRoute: typeof AccountPostRouteImport
+      parentRoute: typeof AccountRouteRoute
+    }
+    '/account/statistics': {
+      id: '/account/statistics'
+      path: '/statistics'
+      fullPath: '/account/statistics'
+      preLoaderRoute: typeof AccountStatisticsRouteImport
+      parentRoute: typeof AccountRouteRoute
+    }
+    '/photo/$id': {
+      id: '/photo/$id'
+      path: '/photo/$id'
+      fullPath: '/photo/$id'
+      preLoaderRoute: typeof PhotoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile/$username': {
+      id: '/profile/$username'
+      path: '/profile/$username'
+      fullPath: '/profile/$username'
+      preLoaderRoute: typeof ProfileUsernameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AuthRouteRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthSignupRoute: typeof AuthSignupRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
+
+interface AccountRouteRouteChildren {
+  AccountPostRoute: typeof AccountPostRoute
+  AccountStatisticsRoute: typeof AccountStatisticsRoute
+  AccountIndexRoute: typeof AccountIndexRoute
+}
+
+const AccountRouteRouteChildren: AccountRouteRouteChildren = {
+  AccountPostRoute: AccountPostRoute,
+  AccountStatisticsRoute: AccountStatisticsRoute,
+  AccountIndexRoute: AccountIndexRoute,
+}
+
+const AccountRouteRouteWithChildren = AccountRouteRoute._addFileChildren(
+  AccountRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
+  AccountRouteRoute: AccountRouteRouteWithChildren,
+  PhotoIdRoute: PhotoIdRoute,
+  ProfileUsernameRoute: ProfileUsernameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
