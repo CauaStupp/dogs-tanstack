@@ -33,7 +33,7 @@ export function Photos({ user }: PhotosProps) {
 						preload={false}
 						className={`${isLargeImg} group relative`}
 					>
-						<div className="absolute inset-0 rounded-sm flex gap-2 items-center justify-center transition bg-black/40 opacity-0 group-hover:opacity-100">
+						<div className="absolute inset-0 rounded-sm flex gap-2 items-center justify-center transition bg-black/40 text-white opacity-0 group-hover:opacity-100">
 							<Eye />
 							{photo.acessos}
 						</div>

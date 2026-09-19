@@ -2,8 +2,7 @@ import { isAxiosError } from "axios";
 
 export function apiErrorHandler(
 	error: unknown,
-	status: number,
-	message: string,
+	message?: string,
 	funcName?: string,
 ) {
 	if (isAxiosError(error)) {
@@ -15,7 +14,7 @@ export function apiErrorHandler(
 		return {
 			data: null,
 			status: error.response?.status ?? 500,
-			message: message,
+			message: message ?? error.message,
 		};
 	}
 	throw error;

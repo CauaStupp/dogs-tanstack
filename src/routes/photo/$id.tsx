@@ -91,8 +91,13 @@ function RouteComponent() {
 						<div className="w-full mt-10">
 							<h3 className="text-muted-foreground mb-3">Comentários</h3>
 							{post.comments.map((comment) => (
-								<div key={comment.comment_ID} className="flex gap-2">
-									<span className="font-bold">{comment.comment_author}:</span>
+								<div
+									key={comment.comment_ID}
+									className="flex items-center gap-1 not-last:mb-2"
+								>
+									<span className="font-bold text-sm">
+										{comment.comment_author}:
+									</span>
 									<p>{comment.comment_content}</p>
 								</div>
 							))}

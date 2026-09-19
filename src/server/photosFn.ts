@@ -96,7 +96,7 @@ export const postPhotoFn = createServerFn({ method: "POST" })
 				message: "Foto postada com sucesso!",
 			};
 		} catch (error: unknown) {
-			throw apiErrorHandler(error, 400, "Erro ao postar foto", "postPhotoFn");
+			throw apiErrorHandler(error, "Erro ao postar foto", "postPhotoFn");
 		}
 	});
 
@@ -116,12 +116,7 @@ export const getPhotoStatsFn = createServerFn()
 
 			return { data: response, status: 200, message: "" };
 		} catch (error: unknown) {
-			throw apiErrorHandler(
-				error,
-				400,
-				"Ocorreu um erro ao pegar as estatísticas da conta",
-				"getPhotoStatsFn",
-			);
+			throw apiErrorHandler(error, "getPhotoStatsFn");
 		}
 	});
 
@@ -132,7 +127,7 @@ export const postCommentFn = createServerFn({ method: "POST" })
 		if (context.session === "expired") throw redirect({ to: "/" });
 		try {
 			const { data: response } = await apiInstance.post(
-				"/api/comment",
+				`/api/comment/${data.id}`,
 				toFormData(data),
 				{
 					headers: {

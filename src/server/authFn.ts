@@ -27,7 +27,7 @@ export const loginFn = createServerFn({ method: "POST" })
 				message: "Login realizado com sucesso!",
 			};
 		} catch (error) {
-			throw apiErrorHandler(error, 400, "Email ou senha inválidos", "loginFn");
+			throw apiErrorHandler(error, "Email ou senha inválidos", "loginFn");
 		}
 	});
 
@@ -39,6 +39,8 @@ export const signupFn = createServerFn({ method: "POST" })
 				"/api/user",
 				toFormData(data),
 			);
+
+			console.log(user);
 
 			if (!user) {
 				throw new Error(
@@ -52,7 +54,7 @@ export const signupFn = createServerFn({ method: "POST" })
 
 			return { data: null, status: 200, message: "Conta criada com sucesso!" };
 		} catch (error) {
-			throw apiErrorHandler(error, 400, "Erro ao criar conta", "signup");
+			throw apiErrorHandler(error, "Erro ao fazer login");
 		}
 	});
 

@@ -5,6 +5,7 @@ import { useCommentPostMutation } from "#/mutations/usePhotoMutations";
 import { commentSchema } from "#/schemas/photo";
 import { Button } from "../ui/button";
 import { Field, FieldError, FieldGroup } from "../ui/field";
+import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 
 type CommentFormProps = {
@@ -16,13 +17,14 @@ export function CommentForm({ photoId }: CommentFormProps) {
 
 	const form = useForm({
 		defaultValues: {
+			id: "",
 			comment: "",
 		},
 		validators: {
 			onSubmit: commentSchema,
 		},
 		onSubmit: async ({ value }) => {
-			await mutateAsync({ id: photoId, comment: value.comment });
+			await mutateAsync({ id: value.id, comment: value.comment });
 		},
 	});
 
@@ -36,6 +38,16 @@ export function CommentForm({ photoId }: CommentFormProps) {
 			className={cn("animate-fade-in flex gap-6 mt-10")}
 		>
 			<FieldGroup className="flex-row">
+				<form.Field name="id" defaultValue={photoId}>
+					{(field) => (
+						<Input
+							type="hidden"
+							id={field.name}
+							name={field.name}
+							value={photoId}
+						/>
+					)}
+				</form.Field>
 				<form.Field name="comment">
 					{(field) => (
 						<Field>
